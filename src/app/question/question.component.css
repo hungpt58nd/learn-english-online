@@ -22,7 +22,7 @@
 }
 
 .btn-ignore {
-  margin-right: 29%;
+  margin-right: 25%;
   height: 60px;
   width: 150px;
   font-size: 25px;
@@ -38,6 +38,7 @@
   height: 60px;
   width: 150px;
   font-size: 25px;
+  float: right;
 }
 
 .show-process {
@@ -56,14 +57,15 @@
 .heart {
   float: left;
   padding-top: 10px;
-  margin-right: 20%;
 }
 
 .running-bar {
   margin-top: 20%;
-  height: 0.3%;
+  height: 0.01px;
   width: 90%;
   margin: auto;
+  position: relative;
+  top: 76px;
 }
 
 .close-symbol {
