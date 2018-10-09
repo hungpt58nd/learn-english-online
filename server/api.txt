@@ -1,0 +1,118 @@
+1. http://localhost:3000/api/levels
+
+{
+	"status": "success",
+	"data": [
+		{
+			"id": 1,
+			"title": "Level 1",
+			"description": "Mức cơ bản nhất",
+			"lessions": [
+				{
+					"id": 1,
+					"title": "Cơ bản 1",
+					"image_link": "../../assets/image/lession1.png"
+				},
+				{
+					"id": 2,
+					"title": "Cơ bản 2",
+					"image_link": "../../assets/image/lession2.png"
+				},
+				{
+					"id": 3,
+					"title": "Cơ bản 3",
+					"image_link": "../../assets/image/lession3.png"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"title": "Level 2",
+			"description": "Bắt đầu khó lên",
+			"lessions": [
+				{
+					"id": 4,
+					"title": "Cơ bản 4",
+					"image_link": "../../assets/image/lession1.png"
+				},
+				{
+					"id": 5,
+					"title": "Cơ bản 5",
+					"image_link": "../../assets/image/lession2.png"
+				},
+				{
+					"id": 6,
+					"title": "Cơ bản 6",
+					"image_link": "../../assets/image/lession3.png"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"title": "Level 3",
+			"description": "Kết hợp kỹ năng",
+			"lessions": [
+				{
+					"id": 7,
+					"title": "Cơ bản 7",
+					"image_link": "../../assets/image/lession1.png"
+				},
+				{
+					"id": 8,
+					"title": "Cơ bản 8",
+					"image_link": "../../assets/image/lession2.png"
+				},
+				{
+					"id": 9,
+					"title": "Cơ bản 9",
+					"image_link": "../../assets/image/lession3.png"
+				}
+			]
+		}
+	]
+}
+
+2. http://localhost:3000/api/login
+{
+	"email": "conganh@gmail.com",
+	"password": "123456"
+}
+
+3. http://localhost:3000/api/register
+{
+	"email": "conganh@gmail.com",
+	"password": "123456",
+	"username": "cong"
+}
+
+4. http://localhost:3000/api/lession
+POST
+{
+    "status": "success",
+    "data": [
+        {
+            "id": 7,
+            "question": "Viết mục này bằng Tiếng Anh: \"Anh ấy ăn một quả táo\"",
+            "type": 0,
+            "right_answer": "he eats an apple",
+            "answers": null,
+            "lession_id": 3
+        },
+        {
+            "id": 8,
+            "question": "Chọn từ còn thiếu: They ___ my childrent",
+            "type": 2,
+            "right_answer": "2",
+            "answers": "\"is\",\"am\",\"are\"",
+            "lession_id": 3
+        },
+        {
+            "id": 9,
+            "question": "Nghe và nghi lại",
+            "type": 1,
+            "right_answer": "the children",
+            "answers": "\"../../assets/sound/the_children.mp3\"",
+            "lession_id": 3
+        }
+    ]
+}
