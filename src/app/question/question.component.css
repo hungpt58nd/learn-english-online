@@ -28,6 +28,7 @@
   font-size: 25px;
   background-color: #E2E6EA !important;
   float: left;
+  border: 1px solid blue;
 }
 
 .btn-ignore:hover {
@@ -59,15 +60,6 @@
   padding-top: 10px;
 }
 
-.running-bar {
-  margin-top: 20%;
-  height: 0.01px;
-  width: 90%;
-  margin: auto;
-  position: relative;
-  top: 76px;
-}
-
 .close-symbol {
   font-size: 40px;
   position: absolute;
@@ -75,6 +67,18 @@
   left: 18%;
   float: left;
   font-size: 40px
+}
+
+.close-symbol:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.progress {
+  margin-left: 37px;
+  top: 73px;
+  position: relative;
+  width: 90%;
 }
 
 .text-input {
@@ -123,4 +127,20 @@
   border-radius: 50px;
   border-color: #1CAFF6;
   color: #1CAFF6;
+}
+
+.sound-question {
+  height: 100%;
+  width: 100%;
+  padding-top: 36px;
+}
+
+.pass-bar {
+  width: 10%;
+  height: 0.1px;
+  border: 2px solid #5BCB00;
+}
+
+.sound-icon:hover {
+  cursor: pointer;
 }
