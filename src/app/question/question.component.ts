@@ -31,9 +31,11 @@ export class QuestionComponent implements OnInit {
   selectedImage: string;
   selectedIndex: number;
   processBar: number;
-  selectedQuestion: Question;
+  selectedQuestion: Question = new Question();
   selectedIndexQuestion = 0;
-
+  backgroundFooter: string;
+  isCheck: boolean;
+  isRight: boolean;
   constructor() { }
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class QuestionComponent implements OnInit {
     this.hearts = ['black', 'red'];
     this.selectedImage = '5px 10px 50px #a9a555';
     this.processBar = 0;
-    this.selectedQuestion = <Question> mockQuestion[this.selectedIndexQuestion];
+    this.selectedQuestion = mockQuestion[this.selectedIndexQuestion];
   }
 
   onSelectAnswer(index: number): void {
@@ -56,6 +58,11 @@ export class QuestionComponent implements OnInit {
     }
   }
   onCheckAnswer() {
+    this.isCheck = true;
+    this.isRight = false;
+  }
+  onForwardQuestion() {
     this.increaseProcessBar();
+    this.isCheck = false;
   }
 }
