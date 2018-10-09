@@ -7,6 +7,10 @@ import { StatisticalComponent } from './statistical/statistical.component';
 import { ContentComponent } from './content/content.component';
 import { LessonContainerComponent } from './lesson-container/lesson-container.component';
 import { LevelLessonComponent } from './level-lesson/level-lesson.component';
+import { AppRoutingModule } from './app-routing.module';
+import { QuestionComponent } from './question/question.component';
+import { LessonListComponent } from './lesson-list/lesson-list.component';
+import { ImageQuestionComponent } from './image-question/image-question.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +19,14 @@ import { LevelLessonComponent } from './level-lesson/level-lesson.component';
     StatisticalComponent,
     ContentComponent,
     LessonContainerComponent,
-    LevelLessonComponent
+    LevelLessonComponent,
+    QuestionComponent,
+    LessonListComponent,
+    ImageQuestionComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
