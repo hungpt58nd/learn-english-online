@@ -77,7 +77,7 @@ app.post('/api/login', (req, res)=>{
 
 app.get('/api/levels', (req, res)=>{
   // get level
-  let sql = 'SELECT * FROM level';
+  let sql = 'SELECT * FROM level LEFT JOIN lession ON level_id = level.id LEFT JOIN exercise ON lession_id = lession.id';
   connection.query(sql, function (err, results) {
     if (err) {
       return res.send({
@@ -85,27 +85,29 @@ app.get('/api/levels', (req, res)=>{
         message: "Lỗi server"
       });
     }
-    let data = results;
-    for (let index = 0; index < data.length; index++) {
-      let element = data[index];
-      let sub_sql = 'SELECT * FROM lesion WHERE lession_id = ?';
-      connection.query(sql, element.id, function (sub_err, sub_results) {
-        if (sub_err) {
-          return res.send({
-            status: "fail",
-            message: "Lỗi server"
-          });
-        }
-        console.log(sub_results)
-        data[index].lessons = sub_results;
-      });
-    }
+    // var data = results;
+    // for (let index = 0; index < data.length; index++) {
+    //   let element = data[index];
+    //   let sub_sql = 'SELECT * FROM lesion WHERE lession_id = ?';
+    //   connection.query(sql, element.id, function (sub_err, sub_results) {
+    //     if (sub_err) {
+    //       return res.send({
+    //         status: "fail",
+    //         message: "Lỗi server"
+    //       });
+    //     }
+    //     console.log(sub_results)
+    //     var data[index].lessons = sub_results;
+    //   });
+    // }
     return res.send({
       status: "success",
-      data: data
+      data: results
     });
   });
 })
+
+// 
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
