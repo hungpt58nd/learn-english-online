@@ -5,4 +5,10 @@ export class Topic {
   title: string;
   description: string;
   lessonList: Array<Lesson>;
+  constructor() {
+    this.level = 0;
+    this.title = '';
+    this.description = '';
+    this.lessonList = null;
+  }
 }

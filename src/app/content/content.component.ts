@@ -59,7 +59,7 @@ const mockData = [
 export class ContentComponent implements OnInit {
 
   lessonList: Array<Lesson>;
-  topicList: Array<Topic>;
+  topicList: Array<Topic> = new Array<Topic>();
   topic: Topic;
   lesson: Lesson;
 
