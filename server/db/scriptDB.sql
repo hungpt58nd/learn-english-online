@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `learnEnglishOnline`.`exercise` (
   `question` MEDIUMTEXT NOT NULL,
   `type` INT(11) NOT NULL,
   `right_answer` MEDIUMTEXT NOT NULL,
-  `answer` LONGTEXT NULL DEFAULT NULL,
+  `answers` LONGTEXT NULL DEFAULT NULL,
   `lession_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_exercise_lession1_idx` (`lession_id` ASC) VISIBLE,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `learnEnglishOnline`.`user` (
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `lession` LONGTEXT NULL DEFAULT NULL,
+  `lessions` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`, `email`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
