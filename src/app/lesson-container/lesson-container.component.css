@@ -1,0 +1,36 @@
+.lesson-container {
+  width: 80px;
+  height: 110px;
+  margin: 10px 10px;
+  margin-left: 50px;
+  float: left;
+}
+
+.lesson-container:hover{
+  cursor: pointer;
+}
+
+.lesson:hover{
+  box-shadow: 5px 10px 50px #a9a555;
+}
+
+.lesson{
+  border: 1px solid;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  /*background-image: url("../../assets/image/EMO1.png");*/
+  background-size: 70px 70px;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.lesson-title {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.last-lesson {
+  margin-left: 35%;
+}

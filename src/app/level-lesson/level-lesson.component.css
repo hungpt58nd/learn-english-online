@@ -1,0 +1,14 @@
+.level-container {
+  height: 120px;
+  width: 100%;
+  text-align: center;
+}
+
+.level-card {
+  box-shadow: 5px 10px 8px darkgrey;
+  border: 1px solid darksalmon;
+  padding-top: 15px;
+  width: 45%;
+  margin-left: 27%;
+  border-radius: 10%;
+}

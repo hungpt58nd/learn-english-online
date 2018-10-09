@@ -1,0 +1,4 @@
+<div class="lesson-container" [class.last-lesson]="index % 2 == 0 && index == length - 1">
+  <div class="lesson" [style.background-image]="lesson.imageLink"></div>
+  <div class="lesson-title"><b>{{lesson.title}}</b></div>
+</div>
