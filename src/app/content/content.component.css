@@ -1,0 +1,11 @@
+.card-body {
+  margin-left: 10px;
+  /*background-color: red;*/
+}
+
+.topic-container{
+  width: 55%;
+  height: 120px;
+  left: 25%;
+  position: relative;
+}

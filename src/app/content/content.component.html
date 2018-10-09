@@ -1,6 +1,11 @@
-<div class="card">
-  <div class="card-header bg-white">Title</div>
+<div class="card" style="margin-top: 15px" *ngFor="let topic of topicList">
   <div class="card-body">
-    <p class="card-text">Some</p>
+    <app-level-lesson [title]="topic.title" [description]="topic.description"></app-level-lesson>
+    <div class="topic-container">
+      <div *ngFor="let lesson of topic.lessonList; index as i">
+        <span *ngIf="i % 2 == 0 && i > 0"><br/></span>
+        <app-lesson-container [index]="i" [length]="lessonList.length" [lesson]="lesson"></app-lesson-container>
+      </div>
+    </div>
   </div>
 </div>
