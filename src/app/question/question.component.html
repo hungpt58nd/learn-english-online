@@ -1,9 +1,11 @@
 <div class="question-container">
   <div class="process-bar">
     <div class="show-process">
-      <div class="running-bar" style="padding-top: 7%"></div>
-      <div class="close-symbol">&times;</div>
-      <div class="running-bar" style="border: 1px solid lightsteelblue;"></div>
+      <a class="close-symbol" routerLink="/">&times;</a>
+
+      <div class="progress" style="background: darkgray">
+        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="processBar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
     </div>
   </div>
   <div class="question-body">
@@ -11,32 +13,45 @@
       <div>
         <div style="font-size: 30px"><b>Dịch nghĩa câu sau sang tiếng việt</b></div>
         <div style="font-size: 30px; margin-top: 20px">How old are you?</div>
-        <input type="text" class="text-input form-control form-control-lg" *ngIf="question.type == 1"/>
+        <input type="text" class="text-input form-control form-control-lg" *ngIf="question.type == 1" />
 
-        <div style="font-size: 20px; margin-top: 20px;" class="select-answer" *ngFor="let heart of hearts"
-             [style.background-color]="heart === 'black' ? '#B9E8FE':''">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" value="" name="defaultCheck1" id="defaultCheck1" style="margin-top: 7px">
-            <span style="margin-left: 20px">Default checkbox</span>
+        <div *ngIf="question.type == 2">
+          <div style="font-size: 20px; margin-top: 20px;" class="select-answer" *ngFor="let heart of hearts; index as i"
+               [style.background-color]="selectedIndex === i ? '#B9E8FE':''" >
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="" name="defaultCheck1"
+                     id="defaultCheck1" style="margin-top: 10px"  (click)="onSelectAnswer(i)">
+              <span style="margin-left: 20px">Default checkbox</span>
+            </div>
           </div>
         </div>
 
         <div style="margin-top: 30px" *ngIf="question.type == 3">
-          <div class="image-question" *ngFor="let heart of hearts">
+          <div class="image-question" *ngFor="let heart of hearts; index as i"
+           [style.box-shadow]="selectedIndex === i ? selectedImage: ''" (click)="onSelectAnswer(i)">
             <div class="image-content"></div>
             <div style="text-align: center; margin-top: 5px; font-size: 15px">Chim cánh cụt</div>
           </div>
+        </div>
+      </div>
+
+      <div class="sound-question" *ngIf="question.type == 4">
+        <div style="width: 12%; float: left;">
+          <img src="../../assets/image/Speaker.png" style="height: 70px" class="sound-icon"/>
+        </div>
+        <div>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="width: 80%;font-size: 20px;height: 80px;"></textarea>
         </div>
       </div>
     </div>
   </div>
   <div class="question-footer">
     <div style="width: 65%; margin: auto; padding-top: 50px">
-      <button type="button" class="btn btn-light btn-ignore">Bỏ qua</button>
+      <button type="button" class="btn btn-light btn-ignore" (click)="increaseProcessBar()">Bỏ qua</button>
       <div class="heart">
         <span class="glyphicon glyphicon-heart" style="font-size: 35px; margin-right: 50px" *ngFor="let heart of hearts" [style.color]="heart"></span>
       </div>
-      <button type="button" class="btn btn-success btn-check">Kiểm tra</button>
+      <button type="button" class="btn btn-success btn-check" (click)="onCheckAnswer()">Kiểm tra</button>
     </div>
   </div>
 </div>

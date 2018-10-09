@@ -6,4 +6,10 @@ export class Question {
   type: number;
   rightAnswer: string;
   answers: QuestionType;
+  constructor(title: string, description: string, rightAnswer: string, answers: QuestionType) {
+    this.title = title;
+    this.description = description;
+    this.rightAnswer = rightAnswer;
+    this.answers = answers;
+  }
 }
