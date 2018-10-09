@@ -123,7 +123,6 @@ app.post('/api/lession', (req, res)=>{
   let sql = 'SELECT * FROM exercise WHERE lession_id = ?';
   connection.query(sql, [req.body.lession_id], function (err, results) {
     if (err || !results) {
-      console.log(err)
       return res.send({
         status: "fail",
         message: "Lỗi server"
@@ -132,6 +131,33 @@ app.post('/api/lession', (req, res)=>{
     return res.send({
       status: "success",
       data: results
+    });
+  });
+})
+
+app.post('/api/user_lessions', (req, res)=>{
+  // push lession done
+  let sql = 'SELECT lession FROM user WHERE id = ?';
+  connection.query(sql, [req.body.user_id], function (err, results) {
+    if (err || !results) {
+      return res.send({
+        status: "fail",
+        message: "Lỗi server"
+      });
+    }
+    let lessions = results[0].lessions;
+    lessions += ',' + req.body.lession_id;
+    let sub_sql = 'UPDATE user SET lessions = ? WHERE id = ?';
+    connection.query(sub_sql, [lessions, req.body.user_id], function (err, results) {
+      if (err || !results) {
+        return res.send({
+          status: "fail",
+          message: "Lỗi server"
+        });
+      }
+      return res.send({
+        status: "success"
+      });
     });
   });
 })
