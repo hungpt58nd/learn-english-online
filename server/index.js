@@ -41,8 +41,8 @@ app.post('/api/register', (req, res)=>{
     email: req.body.email
   };
   let sql = "INSERT INTO user SET ?";
-  connection.query(sql, post, function (error, results, fields) {
-    if (error) {
+  connection.query(sql, post, function (err, results, fields) {
+    if (err) {
       return res.send({
         status: "fail",
         message: "Tài khoản đã tồn tại"
@@ -77,37 +77,64 @@ app.post('/api/login', (req, res)=>{
 
 app.get('/api/levels', (req, res)=>{
   // get level
-  let sql = 'SELECT * FROM level LEFT JOIN lession ON level_id = level.id LEFT JOIN exercise ON lession_id = lession.id';
+  let sql = `SELECT level.id as id, level.title, description, lession.id as lession_id,
+    lession.title as lession_title, image_link FROM level LEFT JOIN lession ON level_id = level.id ORDER BY level.id`;
   connection.query(sql, function (err, results) {
-    if (err) {
+    if (err || !results) {
       return res.send({
         status: "fail",
         message: "Lỗi server"
       });
     }
-    // var data = results;
-    // for (let index = 0; index < data.length; index++) {
-    //   let element = data[index];
-    //   let sub_sql = 'SELECT * FROM lesion WHERE lession_id = ?';
-    //   connection.query(sql, element.id, function (sub_err, sub_results) {
-    //     if (sub_err) {
-    //       return res.send({
-    //         status: "fail",
-    //         message: "Lỗi server"
-    //       });
-    //     }
-    //     console.log(sub_results)
-    //     var data[index].lessons = sub_results;
-    //   });
-    // }
+    let data = [];
+    let countIndex = -1;
+    let curId = -1;
+    for (let index = 0; index < results.length; index++) {
+      if (curId != results[index].id){
+        countIndex++;
+        curId = results[index].id;
+        data.push({
+          id: results[index].id,
+          title: results[index].title,
+          description: results[index].description,
+          lessions: [{
+            id: results[index].lession_id,
+            title: results[index].lession_title,
+            image_link: results[index].image_link
+          }]
+        })
+      } else{
+        data[countIndex].lessions.push({
+          id: results[index].lession_id,
+          title: results[index].lession_title,
+          image_link: results[index].image_link
+        })
+      }
+    }
+    return res.send({
+      status: "success",
+      data: data
+    });
+  });
+})
+
+app.post('/api/lession', (req, res)=>{
+  // get exercise in lession
+  let sql = 'SELECT * FROM exercise WHERE lession_id = ?';
+  connection.query(sql, [req.body.lession_id], function (err, results) {
+    if (err || !results) {
+      console.log(err)
+      return res.send({
+        status: "fail",
+        message: "Lỗi server"
+      });
+    }
     return res.send({
       status: "success",
       data: results
     });
   });
 })
-
-// 
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
