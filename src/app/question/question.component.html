@@ -13,7 +13,7 @@
       <div>
         <div style="font-size: 30px"><b>{{selectedQuestion.description}}</b></div>
         <div style="font-size: 30px; margin-top: 20px">{{selectedQuestion.title}}</div>
-        <input type="text" class="text-input form-control form-control-lg" *ngIf="selectedQuestion.type == 1" />
+        <input [(ngModel)]="answer" type="text" class="text-input form-control form-control-lg" *ngIf="selectedQuestion.type == 1" [disabled]="isCheck" [required]/>
 
         <div *ngIf="selectedQuestion.type == 2">
           <div style="font-size: 20px; margin-top: 20px;" class="select-answer" *ngFor="let selectAns of selectedQuestion.answers.chooses; index as i"
@@ -27,20 +27,20 @@
         </div>
 
         <div style="margin-top: 30px" *ngIf="selectedQuestion.type == 3">
-          <div class="image-question" *ngFor="let heart of hearts; index as i"
+          <div class="image-question" *ngFor="let image of selectedQuestion.answers; index as i"
            [style.box-shadow]="selectedIndex === i ? selectedImage: ''" (click)="onSelectAnswer(i)">
-            <div class="image-content"></div>
-            <div style="text-align: center; margin-top: 5px; font-size: 15px">Chim cánh cụt</div>
+            <div class="image-content" [style.background-image]="image.imageLink"></div>
+            <div style="text-align: center; margin-top: 5px; font-size: 15px">{{image.description}}</div>
           </div>
         </div>
       </div>
 
       <div class="sound-question" *ngIf="selectedQuestion.type == 4">
         <div style="width: 12%; float: left;">
-          <img src="../../assets/image/Speaker.png" style="height: 70px" class="sound-icon"/>
+          <img src="../../assets/image/speaker.png" style="height: 70px" class="sound-icon" (click)="onPlayMP3(selectedQuestion.answers.fileLink)"/>
         </div>
         <div>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="width: 80%;font-size: 20px;height: 80px;"></textarea>
+          <textarea [(ngModel)]="answer" class="form-control" id="exampleFormControlTextarea1" rows="3" style="width: 80%;font-size: 20px;height: 80px;"></textarea>
         </div>
       </div>
     </div>
@@ -68,3 +68,5 @@
     </div>
   </div>
 </div>
+
+<ngbd-modal-component></ngbd-modal-component>

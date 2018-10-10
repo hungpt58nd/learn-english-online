@@ -106,7 +106,7 @@
   width: 90%;
   height: 75%;
   margin: auto;
-  background-image: url("../../assets/image/EMO1.png");
+  /*background-image: url("../../assets/image/EMO1.png");*/
   background-origin: content-box;
   background-repeat: no-repeat;
   background-position: center;

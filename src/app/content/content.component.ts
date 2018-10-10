@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Lesson} from '../model/lesson';
 import {Topic} from '../model/topic';
-import {Question} from '../model/question';
 
 const mockData = [
   {
@@ -33,21 +32,21 @@ const mockData = [
     lessonList: [
       {
         id: 3,
-        imageLink: 'url(../../assets/image/owl.png)',
+        imageLink: 'url(../../assets/image/lession1.png)',
         title: 'Động vật'
       },
       {
         id: 4,
-        imageLink: 'url(../../assets/image/salad.png)',
+        imageLink: 'url(../../assets/image/lession2.png)',
         title: 'Món ăn'
       },
       {
         id: 5,
-        imageLink: 'url(../../assets/image/move.png)',
+        imageLink: 'url(../../assets/image/lession3.png)',
         title: 'Gia đình'
       }
     ]
-  },
+  }
 ];
 
 @Component({
@@ -62,7 +61,7 @@ export class ContentComponent implements OnInit {
   topicList: Array<Topic> = new Array<Topic>();
   topic: Topic;
   lesson: Lesson;
-
+  learnedLesson: string[];
   constructor() {
     this.topic = new Topic();
     this.lesson = new Lesson();
@@ -77,9 +76,11 @@ export class ContentComponent implements OnInit {
     this.topic.title = 'Level 1';
     this.topic.lessonList = this.lessonList;
     this.topicList = mockData;
+    this.learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson').split(',') : [];
   }
 
   onDoLesson(id: number) {
+    localStorage.setItem('lesson_id', id.toString());
     window.open('/lesson', '_parent');
   }
 
