@@ -78,7 +78,7 @@ app.post('/api/login', (req, res)=>{
 app.get('/api/levels', (req, res)=>{
   // get level
   let sql = `SELECT level.id as id, level.title, description, lession.id as lession_id,
-    lession.title as lession_title, image_link FROM level LEFT JOIN lession ON level_id = level.id ORDER BY level.id`;
+    lession.title as lession_title, imageLink FROM level LEFT JOIN lession ON level_id = level.id ORDER BY level.id`;
   connection.query(sql, function (err, results) {
     if (err || !results) {
       return res.send({
@@ -94,20 +94,20 @@ app.get('/api/levels', (req, res)=>{
         countIndex++;
         curId = results[index].id;
         data.push({
-          id: results[index].id,
+          level: results[index].id,
           title: results[index].title,
           description: results[index].description,
-          lessions: [{
+          lessonList: [{
             id: results[index].lession_id,
             title: results[index].lession_title,
-            image_link: results[index].image_link
+            imageLink: results[index].imageLink
           }]
         })
       } else{
-        data[countIndex].lessions.push({
+        data[countIndex].lessonList.push({
           id: results[index].lession_id,
           title: results[index].lession_title,
-          image_link: results[index].image_link
+          imageLink: results[index].imageLink
         })
       }
     }
@@ -120,7 +120,7 @@ app.get('/api/levels', (req, res)=>{
 
 app.post('/api/lession', (req, res)=>{
   // get exercise in lession
-  let sql = 'SELECT * FROM exercise WHERE lession_id = ?';
+  let sql = 'SELECT title, description, type, rightAnswer, answers FROM exercise WHERE lession_id = ?';
   connection.query(sql, [req.body.lession_id], function (err, results) {
     if (err || !results) {
       return res.send({
@@ -128,6 +128,24 @@ app.post('/api/lession', (req, res)=>{
         message: "Lỗi server"
       });
     }
+    for (let index = 0; index < results.length; index++) {
+      console.log(results[index].answers)
+      if(results[index].type == 1){
+        results[index].answers = JSON.parse(results[index].answers);
+      }
+      if(results[index].type == 2){
+        results[index].answers = JSON.parse(results[index].answers);
+      }
+      if(results[index].type == 3){
+        results[index].answers = JSON.parse(results[index].answers);
+      }
+      if(results[index].type == 4){
+        results[index].answers = JSON.parse(results[index].answers);
+      }
+      console.log(results[index].answers)
+    }
+    
+    console.log(results)
     return res.send({
       status: "success",
       data: results

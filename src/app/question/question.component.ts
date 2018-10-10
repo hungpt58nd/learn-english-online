@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Question} from '../model/question';
+import { QuestionService } from "./question.service";
 
 const mockQuestion = [
   {
@@ -36,7 +37,13 @@ export class QuestionComponent implements OnInit {
   backgroundFooter: string;
   isCheck: boolean;
   isRight: boolean;
-  constructor() { }
+  constructor(private questionService: QuestionService) {
+    this.questionService.getQuestions("2").subscribe(
+      res => {
+        console.log(res)
+      }
+    );
+  }
 
   ngOnInit() {
     this.selectedIndex = -1;
