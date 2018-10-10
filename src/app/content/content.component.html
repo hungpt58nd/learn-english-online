@@ -4,7 +4,7 @@
     <div class="topic-container">
       <div *ngFor="let lesson of topic.lessonList; index as i" (click)="onDoLesson(lesson.id, topic.level)">
         <span *ngIf="i && i % 2 == 0 && i > 0"><br/></span>
-        <app-lesson-container [index]="i" [length]="lessonList.length" [lesson]="lesson" [isPass]="learnedLesson.includes(lesson.id.toString()) ? true: false"></app-lesson-container>
+        <app-lesson-container [index]="i" [length]="topic.lessonList.length" [lesson]="lesson" [isPass]="learnedLesson.includes(lesson.id.toString()) ? true: false"></app-lesson-container>
       </div>
     </div>
   </div>

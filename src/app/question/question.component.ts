@@ -1,100 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import {Question} from '../model/question';
 import { QuestionService } from "./question.service";
-
-const mockQuestion = [
-  {
-    title: 'How are you ?',
-    description: 'Dịch câu tiếng anh sau sang tiếng việt',
-    type: 1,
-    rightAnswer: 'Bạn có khoẻ không ?',
-    answers: null
-  },
-  {
-    title: 'How __ you ?',
-    description: 'Chọn đáp án đúng cho câu dưới đây',
-    type: 2,
-    rightAnswer: 'How are you ?',
-    answers: {
-      chooses: ['are', 'do', 'what']
-    }
-  },
-  {
-    title: 'Boy',
-    description: 'Chọn bức tranh phù hợp với từ',
-    type: 3,
-    rightAnswer: 'Cậu bé',
-    answers: [
-      {
-        imageLink: 'url(../../assets/image/boy.png)',
-        description: 'Cậu bé'
-      },
-      {
-        imageLink: 'url(../../assets/image/girl.png)',
-        description: 'Cô gái'
-      },
-      {
-        imageLink: 'url(../../assets/image/man.png)',
-        description: 'Người đàn ông'
-      }
-    ]
-  },
-  {
-    title: '',
-    description: '',
-    type: 4,
-    rightAnswer: 'boy',
-    answers: {
-      fileLink: '../../assets/sound/boy.mp3'
-    }
-  }
-];
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
   hearts: Array<string>;
-  // question: Question = new Question();
   selectedImage: string;
   selectedIndex: number;
   processBar: number;
   selectedQuestion: Question = new Question();
   selectedIndexQuestion = 0;
-  backgroundFooter: string;
+  // backgroundFooter: string;
   isCheck: boolean;
   isRight: boolean;
-  constructor(private questionService: QuestionService) {
-    this.questionService.getQuestions("2").subscribe(
+  answer: string;
+  questions: Array<Question> = new Array<Question>();
+  constructor(
+    private questionService: QuestionService,
+    private router: Router, 
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.questionService.getQuestions(activatedRoute.snapshot.paramMap.get('id')).subscribe(
       res => {
-        console.log(res)
+        this.questions = res.data;
+        this.selectedIndex = -1;
+        this.hearts = ['red', 'red'];
+        this.selectedImage = '5px 10px 50px #a9a555';
+        this.processBar = 0;
+        this.selectedQuestion = this.questions[this.selectedIndexQuestion];
+        this.answer = '';
       }
     );
   }
-  answer: string;
-
-  ngOnInit() {
-    this.selectedIndex = -1;
-    this.hearts = ['red', 'red'];
-    this.selectedImage = '5px 10px 50px #a9a555';
-    this.processBar = 0;
-    this.selectedQuestion = mockQuestion[this.selectedIndexQuestion];
-    this.answer = '';
-  }
-
+  
   onSelectAnswer(index: number): void {
     this.selectedIndex = index;
   }
+
   increaseProcessBar() {
     this.selectedIndexQuestion ++;
-    if (this.selectedIndexQuestion === mockQuestion.length) {
+    if (this.selectedIndexQuestion == this.questions.length) {
       this.processBar = 100;
     } else {
-      this.processBar = this.processBar + (100 / mockQuestion.length);
+      this.processBar = this.processBar + (100 / this.questions.length);
     }
   }
+
+  onCancel(){
+    this.increaseProcessBar();
+    this.selectedQuestion = this.questions[this.selectedIndexQuestion];
+    const indexHeart = this.hearts.lastIndexOf('black');
+    if (indexHeart === 1) {
+      alert('Bạn đã sai quá 2 lần');
+      window.open('/', '_parent');
+    } else {
+      this.hearts[indexHeart + 1] = 'black';
+    }
+  }
+
   onCheckAnswer() {
     let flag = false;
     switch (this.selectedQuestion.type) {
@@ -102,15 +70,16 @@ export class QuestionComponent implements OnInit {
         break;
       }
       case 2: {
+        // console.log(this.selectedQuestion.answers.chooses)
         if (this.selectedIndex === -1) {
           flag = true;
         } else {
-          this.answer = this.selectedQuestion.title.replace('__', this.selectedQuestion.answers.chooses[this.selectedIndex]);
+          this.answer = this.selectedQuestion.title.replace('__', this.selectedQuestion.answers[this.selectedIndex]);
         }
         break;
       }
       case 3: {
-        if (this.selectedIndex === -1) {
+        if (this.selectedIndex == -1) {
           flag = true;
         } else {
           this.answer = this.selectedQuestion.answers[this.selectedIndex].description;
@@ -144,15 +113,16 @@ export class QuestionComponent implements OnInit {
     }
     this.increaseProcessBar();
   }
+
   onForwardQuestion() {
     if (this.processBar >= 100) {
       alert('Bạn đã hoàn thành bài học');
-      const learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson') : '-1';
-      const lessonId = localStorage.getItem('lesson_id');
-      localStorage.setItem('learnedLesson', learnedLesson + ',' + lessonId);
-      window.open('/', '_parent');
+      // const learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson') : '-1';
+      // const lessonId = localStorage.getItem('lesson_id');
+      // localStorage.setItem('learnedLesson', learnedLesson + ',' + lessonId);
+      this.router.navigate(['']);
     }
-    this.selectedQuestion = mockQuestion[this.selectedIndexQuestion];
+    this.selectedQuestion = this.questions[this.selectedIndexQuestion];
     this.isCheck = false;
     this.selectedIndex = -1;
     this.answer = '';

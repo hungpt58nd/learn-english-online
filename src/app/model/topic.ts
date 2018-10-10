@@ -9,6 +9,6 @@ export class Topic {
     this.level = 0;
     this.title = '';
     this.description = '';
-    this.lessonList = null;
+    this.lessonList = new Array<Lesson>();
   }
 }

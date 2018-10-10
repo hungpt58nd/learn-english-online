@@ -1,54 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Lesson} from '../model/lesson';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {Topic} from '../model/topic';
 import { ContentService } from "./content.service";
-
-const mockData = [
-  {
-    level: 1,
-    title: 'Level 1',
-    description: 'Người mới học bắt đầu từ level 1',
-    lessonList: [
-      {
-        id: 0,
-        imageLink: 'url(../../assets/image/EMO1.png)',
-        title: 'Cơ bản 1'
-      },
-      {
-        id: 1,
-        imageLink: 'url(../../assets/image/EMO1.png)',
-        title: 'Cơ bản 2'
-      },
-      {
-        id: 2,
-        imageLink: 'url(../../assets/image/EMO1.png)',
-        title: 'Cơ bản 3'
-      }
-    ]
-  },
-  {
-    level: 2,
-    title: 'Level 2',
-    description: 'Cố gắng nhỏ mỗi ngày',
-    lessonList: [
-      {
-        id: 3,
-        imageLink: 'url(../../assets/image/lession1.png)',
-        title: 'Động vật'
-      },
-      {
-        id: 4,
-        imageLink: 'url(../../assets/image/lession2.png)',
-        title: 'Món ăn'
-      },
-      {
-        id: 5,
-        imageLink: 'url(../../assets/image/lession3.png)',
-        title: 'Gia đình'
-      }
-    ]
-  }
-];
 
 @Component({
   selector: 'app-content',
@@ -56,52 +9,49 @@ const mockData = [
   styleUrls: ['./content.component.css']
 })
 
-export class ContentComponent implements OnInit {
+export class ContentComponent{
 
-  lessonList: Array<Lesson>;
+  // user
   topicList: Array<Topic> = new Array<Topic>();
-  topic: Topic;
-  lesson: Lesson;
-
+  learnedLesson: Array<string> = ['1','2','3'];
   
-  learnedLesson: string[];
-  constructor(private contentService: ContentService)  {
-    this.topic = new Topic();
-    this.lesson = new Lesson();
+  constructor(private contentService: ContentService, private route: Router)  {
     this.contentService.getTopics().subscribe(
       res => {
         this.topicList = res.data;
-        console.log(this.topicList)
+        // console.log(this.topicList)
       },
       err => {
-        alert("Lỗi trong khi lấy dữ liệu về")
+        alert("Lỗi trong khi lấy dữ liệu về");
       }
     );
   }
 
-  ngOnInit() {
-    this.lesson.imageLink = 'url(../../assets/image/EMO1.png)';
-    // this.lesson.title = 'Cơ bản 1';
-    this.lessonList = [this.lesson, this.lesson, this.lesson];
-    // this.topic.level = 1;
-    // this.topic.description = 'Người mới học bắt đầu tại level 1';
-    // this.topic.title = 'Level 1';
-    this.topic.lessonList = this.lessonList;
-    this.topicList = mockData;
-    this.learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson').split(',') : [];
-  }
 
   onDoLesson(id: number, level: number) {
-    const lastLesson = this.learnedLesson.length === 0 ? 0 : Number(this.learnedLesson[this.learnedLesson.length - 1]) + 1;
-    if (id === lastLesson) {
-      window.open('/lesson', '_parent');
+    // thieu api get
+    let latestLesson = parseInt(this.learnedLesson[this.learnedLesson.length -1]) +1;
+    let lessonTitle = 'Lession 1';
+    let levelTitle = 'Level 1';
+    let findLevel = 1;
+    if (id <= latestLesson) {
+      this.route.navigate(['/lesson', id ]);
     } else {
-      const findLevel = mockData.find(lv => lv.lessonList.find(lesson => lesson.id === lastLesson) !== undefined).level
+      for (let i = 0; i < this.topicList.length; i++) {
+        let lessons = this.topicList[i].lessonList;
+        for (let j = 0; j < lessons.length; j++) {
+          if(lessons[j].id == latestLesson){
+            lessonTitle = lessons[j].title;
+            levelTitle = this.topicList[i].title;
+            findLevel = this.topicList[i].level;
+            break;
+          }
+        }        
+      }
       if (level !== findLevel) {
-        alert('Hãy học với level: ' + findLevel);
+        alert('Hãy học với level: ' + levelTitle);
       } else {
-        const lastTitle = this.topicList[level - 1].lessonList[lastLesson].title;
-        alert('Hãy học với bài: ' + lastTitle);
+        alert('Hãy học với bài: ' + lessonTitle);
       }
     }
   }

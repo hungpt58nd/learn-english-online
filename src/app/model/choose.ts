@@ -1,9 +1,9 @@
 import {QuestionType} from './type';
 
-class Choose {
-  answer: string;
-}
 
 export class ChooseQuestion implements QuestionType {
-  chooses: Array<Choose>;
+  chooses: Array<string>;
+  constructor(){
+    this.chooses = new Array<string>();
+  }
 }

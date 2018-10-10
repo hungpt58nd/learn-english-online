@@ -48,9 +48,12 @@ app.post('/api/register', (req, res)=>{
         message: "Tài khoản đã tồn tại"
       });
     }
-    return res.send({
-      status: "success",
-      data: results
+    let sub_sql = 'SELECT * FROM user WHERE id = ?'
+    connection.query(sub_sql, [results.insertId], function (err, sub_results) {
+      return res.send({
+        status: "success",
+        data: sub_results[0]
+      });
     });
   });
 })
@@ -67,10 +70,19 @@ app.post('/api/login', (req, res)=>{
         message: "Email hoặc mật khẩu bị sai"
       });
     }
+    let data = {
+      id: results[0].id,
+      username: results[0].username,
+      email: results[0].email,
+      password: results[0].password,
+      lessions: results[0].lessions
+    }
+    if (!results[0].lessions){
+      data.lessions= results[0].lessions.split(",");
+    }
     return res.send({
       status: "success",
-      // results ở đây là mảng
-      data: results
+      data: data
     });
   });
 })
@@ -129,12 +141,11 @@ app.post('/api/lession', (req, res)=>{
       });
     }
     for (let index = 0; index < results.length; index++) {
-      console.log(results[index].answers)
       if(results[index].type == 1){
         results[index].answers = JSON.parse(results[index].answers);
       }
       if(results[index].type == 2){
-        results[index].answers = JSON.parse(results[index].answers);
+        results[index].answers = results[index].answers.split(",");
       }
       if(results[index].type == 3){
         results[index].answers = JSON.parse(results[index].answers);
@@ -142,7 +153,7 @@ app.post('/api/lession', (req, res)=>{
       if(results[index].type == 4){
         results[index].answers = JSON.parse(results[index].answers);
       }
-      console.log(results[index].answers)
+      // console.log(results[index].answers)
     }
     
     console.log(results)

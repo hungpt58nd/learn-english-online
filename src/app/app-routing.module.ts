@@ -5,7 +5,7 @@ import {LessonListComponent} from './lesson-list/lesson-list.component';
 
 const routes: Routes = [
   { path: '', component: LessonListComponent, pathMatch: 'full' },
-  { path: 'lesson', component: QuestionComponent }
+  { path: 'lesson/:id', component: QuestionComponent }
 ];
 
 @NgModule({
