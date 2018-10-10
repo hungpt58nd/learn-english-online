@@ -10,6 +10,7 @@ export class LessonContainerComponent implements OnInit {
   @Input() index: number;
   @Input() length: number;
   @Input() lesson: Lesson;
+  @Input() isPass: boolean;
   constructor() {}
 
   ngOnInit() {

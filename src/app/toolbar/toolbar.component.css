@@ -1,0 +1,22 @@
+.user-icon {
+  padding-left: 4px;
+  width: 47px;
+  height: 40px;
+  background: white;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.acc:hover {
+  cursor: pointer;
+}
+
+.authen {
+  font-size: 20px;
+  color: white;
+  margin-right: 87px;
+}
+
+.authen:hover{
+  cursor: pointer;
+}

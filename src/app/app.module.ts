@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { QuestionComponent } from './question/question.component';
 import { LessonListComponent } from './lesson-list/lesson-list.component';
 import { ImageQuestionComponent } from './image-question/image-question.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ImageQuestionComponent } from './image-question/image-question.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

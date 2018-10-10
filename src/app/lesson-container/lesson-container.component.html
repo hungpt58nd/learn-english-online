@@ -1,4 +1,4 @@
 <div class="lesson-container" [class.last-lesson]="index % 2 == 0 && index == length - 1">
-  <div class="lesson" [style.background-image]="lesson.imageLink"></div>
+  <div class="lesson" [style.background-image]="lesson.imageLink" [style.background-color]="isPass ? 'aquamarine': ''"></div>
   <div class="lesson-title"><h4>{{lesson.title}}</h4></div>
 </div>
