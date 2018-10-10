@@ -11,5 +11,10 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onLogout() {
+    alert('Dang xuat');
+  }
+  onUserSetting() {
+    alert('Setting');
+  }
 }

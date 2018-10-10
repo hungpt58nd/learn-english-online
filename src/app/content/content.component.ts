@@ -79,9 +79,18 @@ export class ContentComponent implements OnInit {
     this.learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson').split(',') : [];
   }
 
-  onDoLesson(id: number) {
-    localStorage.setItem('lesson_id', id.toString());
-    window.open('/lesson', '_parent');
+  onDoLesson(id: number, level: number) {
+    const lastLesson = this.learnedLesson.length === 0 ? 0 : Number(this.learnedLesson[this.learnedLesson.length - 1]) + 1;
+    if (id === lastLesson) {
+      window.open('/lesson', '_parent');
+    } else {
+      const findLevel = mockData.find(lv => lv.lessonList.find(lesson => lesson.id === lastLesson) !== undefined).level
+      if (level !== findLevel) {
+        alert('Hãy học với level: ' + findLevel);
+      } else {
+        const lastTitle = this.topicList[level - 1].lessonList[lastLesson].title;
+        alert('Hãy học với bài: ' + lastTitle);
+      }
+    }
   }
-
 }

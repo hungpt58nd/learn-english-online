@@ -1,0 +1,11 @@
+.card-text {
+  height: 300px;
+}
+
+.crown {
+  width: 80%;
+  height: 60%;
+  margin-left: 90px;
+  background-image: url("../../assets/image/crown.png");
+  background-repeat: no-repeat;
+}
