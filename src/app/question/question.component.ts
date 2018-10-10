@@ -85,15 +85,7 @@ export class QuestionComponent implements OnInit {
     if (this.selectedIndexQuestion === mockQuestion.length) {
       this.processBar = 100;
     } else {
-      this.selectedQuestion = mockQuestion[this.selectedIndexQuestion];
       this.processBar = this.processBar + (100 / mockQuestion.length);
-    }
-    if (this.processBar === 100) {
-      alert('Bạn đã hoàn thành bài học');
-      const learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson') : '-1';
-      const lessonId = localStorage.getItem('lesson_id');
-      localStorage.setItem('learnedLesson', learnedLesson + ',' + lessonId);
-      window.open('/', '_parent');
     }
   }
   onCheckAnswer() {
@@ -134,7 +126,7 @@ export class QuestionComponent implements OnInit {
       } else {
         this.onPlayMP3('../../assets/sound/Wrong.wav');
         this.isRight = false;
-        const indexHeart = this.hearts.findIndex(heart => heart === 'black');
+        const indexHeart = this.hearts.lastIndexOf('black');
         if (indexHeart === 1) {
           alert('Bạn đã sai quá 2 lần');
           window.open('/', '_parent');
@@ -143,9 +135,17 @@ export class QuestionComponent implements OnInit {
         }
       }
     }
+    this.increaseProcessBar();
   }
   onForwardQuestion() {
-    this.increaseProcessBar();
+    if (this.processBar >= 100) {
+      alert('Bạn đã hoàn thành bài học');
+      const learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson') : '-1';
+      const lessonId = localStorage.getItem('lesson_id');
+      localStorage.setItem('learnedLesson', learnedLesson + ',' + lessonId);
+      window.open('/', '_parent');
+    }
+    this.selectedQuestion = mockQuestion[this.selectedIndexQuestion];
     this.isCheck = false;
     this.selectedIndex = -1;
     this.answer = '';
