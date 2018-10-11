@@ -15,8 +15,8 @@ app.use((req, res, next) => {
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'p4x',
-  password : 'Pyxis4All@',
+  user     : 'root',
+  password : '123456',
   database : 'learnEnglishOnline'
 });
  
@@ -77,7 +77,7 @@ app.post('/api/login', (req, res)=>{
       password: results[0].password,
       lessions: results[0].lessions
     }
-    if (!results[0].lessions){
+    if (results[0].lessions != null){
       data.lessions= results[0].lessions.split(",");
     }
     return res.send({

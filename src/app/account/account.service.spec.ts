@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ToolbarService } from './toolbar.service';
+import { AccountService } from './account.service';
 
-describe('ToolbarService', () => {
+describe('AccountService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ToolbarService = TestBed.get(ToolbarService);
+    const service: AccountService = TestBed.get(AccountService);
     expect(service).toBeTruthy();
   });
 });

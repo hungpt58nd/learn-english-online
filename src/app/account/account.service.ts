@@ -5,7 +5,7 @@ import { UserRes } from '../model/userRes';
 @Injectable({
   providedIn: 'root'
 })
-export class ToolbarService {
+export class AccountService {
 
   constructor(private http: HttpClient) {}
   
@@ -20,4 +20,3 @@ export class ToolbarService {
   }
   
 }
-

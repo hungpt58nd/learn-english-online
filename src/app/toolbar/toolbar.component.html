@@ -7,10 +7,8 @@
       <div class="user-icon" style="float: left">
         <img src="../../assets/image/user.png"/>
       </div>
-      <div style="font-size: 23px;color: white;">Khung Troi Moi</div>
+      <div style="font-size: 23px;color: white;">{{userInfo.username}}</div>
     </div>
-    <div *ngIf="isLogin" class="authen" (click)="onLogout()"> <i class="glyphicon glyphicon-log-out" style="font-size: 20px"></i> Đăng xuất</div>
-    <div *ngIf="!isLogin" class="authen" (click)="onLogin()"> <i class="glyphicon glyphicon-log-out" style="font-size: 20px"></i> Đăng nhập </div>
-    <div *ngIf="!isLogin" class="authen" (click)="onRegister()"> <i class="glyphicon glyphicon-log-out" style="font-size: 20px"></i> Đăng ký </div>
+    <div *ngIf="isLogin" class="authen" (click)="onLogout()"> <i class="glyphicon glyphicon-log-out" style="font-size: 20px"></i> Đăng xuất</div>    
   </div>
 </nav>

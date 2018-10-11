@@ -13,6 +13,7 @@ import { QuestionComponent } from './question/question.component';
 import { LessonListComponent } from './lesson-list/lesson-list.component';
 import { ImageQuestionComponent } from './image-question/image-question.component';
 import {FormsModule} from '@angular/forms';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {FormsModule} from '@angular/forms';
     LevelLessonComponent,
     QuestionComponent,
     LessonListComponent,
-    ImageQuestionComponent
+    ImageQuestionComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
