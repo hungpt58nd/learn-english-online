@@ -20,7 +20,6 @@ export class AccountComponent implements OnInit {
   constructor(private accountService: AccountService, private router: Router) { }
 
   onLogin(){
-    alert("login");
     this.isLoadingLogin = true;
     this.accountService.login(this.userInfo.email, this.userInfo.password).subscribe(
       res => {
