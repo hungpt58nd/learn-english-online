@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { User } from "../model/user"
 
 @Component({
@@ -7,7 +7,7 @@ import { User } from "../model/user"
   styleUrls: ['./lesson-list.component.css']
 })
 export class LessonListComponent implements OnInit {
-
+  @Input() levelAt: string;
   constructor() { 
     // if (localStorage.getItem('user')){
     //   let user = JSON.parse(localStorage.getItem('user'));

@@ -15,8 +15,8 @@ app.use((req, res, next) => {
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '123456',
+  user     : 'p4x',
+  password : 'Pyxis4All@',
   database : 'learnEnglishOnline'
 });
  
@@ -190,6 +190,94 @@ app.post('/api/user_lessions', (req, res)=>{
     });
   });
 })
+
+app.get('/api/user/:id', (req, res) => {
+  // ket noi server, dang nhap
+  let userId = req.params.id;
+
+  let sql = 'SELECT * FROM user WHERE id = ?';
+  connection.query(sql, [userId], function (err, results) {
+    if (err || results.length == 0) {
+      res.send({
+        status: "fail",
+        message: "Error"
+      });
+    }
+    let data = {
+      id: results[0].id,
+      username: results[0].username,
+      email: results[0].email,
+      password: results[0].password,
+      lessions: results[0].lessions,
+      right: results[0].rights,
+      wrong: results[0].wrong
+    }
+    if (!results[0].lessions){
+      data.lessions= results[0].lessions.split(",");
+    }
+    return res.send({
+      status: "success",
+      data: data
+    });
+  });
+})
+
+app.post('/api/user/lesson/learn', (req, res) => {
+  let userId = req.body.userId;
+  let lessonId = req.body.lessonId;
+
+  console.log('asdasd');
+  let sql = 'SELECT * FROM user WHERE id = ?';
+  connection.query(sql, [userId], function (err, results) {
+    if (err || results.length == 0) {
+      res.send({
+        status: "fail",
+        message: "Error"
+      });
+    }
+    let data = {
+      id: results[0].id,
+      username: results[0].username,
+      email: results[0].email,
+      password: results[0].password,
+      lessions: results[0].lessions
+    }
+    if (!results[0].lessions.split(',').includes(lessonId.toString())){
+      data.lessions = data.lessions + ',' + lessonId;
+    }
+    updateLesson(userId, data.lessions);
+    res.send({
+      status: "success"
+    });
+  });
+})
+
+app.post('/api/user/right', (req, res) => {
+   let sql = 'UPDATE user SET rights = ? where id = ?';
+   console.log(sql);
+   connection.query(sql, [req.body.right, Number(req.body.userId)], function (err, results) {
+     if(err){
+       console.log(err.toString())
+     }
+     res.send({status: "sucess"})
+   })
+})
+
+app.post('/api/user/wrong', (req, res) => {
+  let sql = 'UPDATE user SET wrong = ? where id = ?';
+  connection.query(sql, [req.body.wrong, Number(req.body.userId)], function (err, results) {
+    if(err){
+      console.log('error')
+    }
+    res.send({status: "sucess"})
+  })
+})
+
+updateLesson = (userId, lessons) => {
+  let sql = 'UPDATE user SET lessions = ? where id = ?';
+  connection.query(sql, [lessons, userId], function (err, results) {
+  });
+}
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

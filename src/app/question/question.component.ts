@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Question} from '../model/question';
-import { QuestionService } from "./question.service";
+import { QuestionService } from './question.service';
 
 @Component({
   selector: 'app-question',
@@ -20,9 +20,11 @@ export class QuestionComponent {
   isRight: boolean;
   answer: string;
   questions: Array<Question> = new Array<Question>();
+  right: number;
+  wrong: number;
   constructor(
     private questionService: QuestionService,
-    private router: Router, 
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     this.questionService.getQuestions(activatedRoute.snapshot.paramMap.get('id')).subscribe(
@@ -34,17 +36,18 @@ export class QuestionComponent {
         this.processBar = 0;
         this.selectedQuestion = this.questions[this.selectedIndexQuestion];
         this.answer = '';
+        this.right = Number(localStorage.getItem('right'));
+        this.wrong = Number(localStorage.getItem('wrong'));
       }
     );
   }
-  
   onSelectAnswer(index: number): void {
     this.selectedIndex = index;
   }
 
   increaseProcessBar() {
     this.selectedIndexQuestion ++;
-    if (this.selectedIndexQuestion == this.questions.length) {
+    if (this.selectedIndexQuestion === this.questions.length) {
       this.processBar = 100;
     } else {
       this.processBar = this.processBar + (100 / this.questions.length);
@@ -74,12 +77,12 @@ export class QuestionComponent {
         if (this.selectedIndex === -1) {
           flag = true;
         } else {
-          this.answer = this.selectedQuestion.title.replace('__', this.selectedQuestion.answers[this.selectedIndex]);
+          this.answer = this.selectedQuestion.answers[this.selectedIndex];
         }
         break;
       }
       case 3: {
-        if (this.selectedIndex == -1) {
+        if (this.selectedIndex === -1) {
           flag = true;
         } else {
           this.answer = this.selectedQuestion.answers[this.selectedIndex].description;
@@ -96,9 +99,10 @@ export class QuestionComponent {
       return;
     } else {
       this.isCheck = true;
-      if (this.answer === this.selectedQuestion.rightAnswer) {
+      if (this.answer.toLowerCase() === this.selectedQuestion.rightAnswer) {
         this.onPlayMP3('../../assets/sound/Correct.mp3');
         this.isRight = true;
+        this.questionService.updateRight(localStorage.getItem('account_id'), ++this.right).subscribe();
       } else {
         this.onPlayMP3('../../assets/sound/Wrong.wav');
         this.isRight = false;
@@ -109,6 +113,7 @@ export class QuestionComponent {
         } else {
           this.hearts[indexHeart + 1] = 'black';
         }
+        this.questionService.updateWrong(localStorage.getItem('account_id'), ++this.wrong).subscribe();
       }
     }
     this.increaseProcessBar();
@@ -117,10 +122,19 @@ export class QuestionComponent {
   onForwardQuestion() {
     if (this.processBar >= 100) {
       alert('Bạn đã hoàn thành bài học');
+      let userId = localStorage.getItem('account_id');
+      if (userId) {
+        this.questionService.updateLesson(userId, this.activatedRoute.snapshot.paramMap.get('id')).subscribe(
+          res => {
+            this.router.navigate(['']);
+          }
+        );
+      }
+
       // const learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson') : '-1';
       // const lessonId = localStorage.getItem('lesson_id');
       // localStorage.setItem('learnedLesson', learnedLesson + ',' + lessonId);
-      this.router.navigate(['']);
+
     }
     this.selectedQuestion = this.questions[this.selectedIndexQuestion];
     this.isCheck = false;

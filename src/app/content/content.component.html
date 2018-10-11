@@ -1,6 +1,6 @@
 <div class="card" style="margin-top: 15px" *ngFor="let topic of topicList">
   <div class="card-body">
-    <app-level-lesson [title]="topic.title" [description]="topic.description"></app-level-lesson>
+    <app-level-lesson [title]="topic.title" [description]="topic.description" ></app-level-lesson>
     <div class="topic-container">
       <div *ngFor="let lesson of topic.lessonList; index as i" (click)="onDoLesson(lesson.id, topic.level)">
         <span *ngIf="i && i % 2 == 0 && i > 0"><br/></span>

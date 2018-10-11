@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ToolbarService } from "./toolbar.service";
 import { User } from "../model/user";
 
@@ -12,7 +12,7 @@ export class ToolbarComponent implements OnInit {
   isLogin = false;
 
   userInfo: User = new User();
-
+  @Input() levelAt: string
   constructor(private toolbarService: ToolbarService) { 
     if (localStorage.getItem('user')){
       let user = JSON.parse(localStorage.getItem('user'));
