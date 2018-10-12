@@ -29,15 +29,23 @@ export class QuestionComponent {
   ) {
     this.questionService.getQuestions(activatedRoute.snapshot.paramMap.get('id')).subscribe(
       res => {
-        this.questions = res.data;
-        this.selectedIndex = -1;
-        this.hearts = ['red', 'red'];
-        this.selectedImage = '5px 10px 50px #a9a555';
-        this.processBar = 0;
-        this.selectedQuestion = this.questions[this.selectedIndexQuestion];
-        this.answer = '';
-        this.right = Number(localStorage.getItem('right'));
-        this.wrong = Number(localStorage.getItem('wrong'));
+        if(res.status == "fail"){
+          alert(res.message);
+          router.navigate(['']);
+        } else{
+          this.questions = res.data;
+          this.selectedIndex = -1;
+          this.hearts = ['red', 'red'];
+          this.selectedImage = '5px 10px 50px #a9a555';
+          this.processBar = 0;
+          this.selectedQuestion = this.questions[this.selectedIndexQuestion];
+          this.answer = '';
+          this.right = Number(localStorage.getItem('right'));
+          this.wrong = Number(localStorage.getItem('wrong'));
+        }
+      },
+      err => {
+        router.navigate(['']);
       }
     );
   }
