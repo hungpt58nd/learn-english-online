@@ -110,7 +110,7 @@ export class QuestionComponent {
       if (this.answer.toLowerCase() === this.selectedQuestion.rightAnswer) {
         this.onPlayMP3('../../assets/sound/Correct.mp3');
         this.isRight = true;
-        this.questionService.updateRight(localStorage.getItem('account_id'), ++this.right).subscribe();
+        this.questionService.updateRight(Number(localStorage.getItem('account_id')), ++this.right).subscribe();
       } else {
         this.onPlayMP3('../../assets/sound/Wrong.wav');
         this.isRight = false;
@@ -121,7 +121,7 @@ export class QuestionComponent {
         } else {
           this.hearts[indexHeart + 1] = 'black';
         }
-        this.questionService.updateWrong(localStorage.getItem('account_id'), ++this.wrong).subscribe();
+        this.questionService.updateWrong(Number(localStorage.getItem('account_id')), ++this.wrong).subscribe();
       }
     }
     this.increaseProcessBar();
@@ -132,16 +132,12 @@ export class QuestionComponent {
       alert('Bạn đã hoàn thành bài học');
       let userId = localStorage.getItem('account_id');
       if (userId) {
-        this.questionService.updateLesson(userId, this.activatedRoute.snapshot.paramMap.get('id')).subscribe(
+        this.questionService.updateLesson(Number(userId), this.activatedRoute.snapshot.paramMap.get('id')).subscribe(
           res => {
             this.router.navigate(['']);
           }
         );
       }
-
-      // const learnedLesson = localStorage.getItem('learnedLesson') ? localStorage.getItem('learnedLesson') : '-1';
-      // const lessonId = localStorage.getItem('lesson_id');
-      // localStorage.setItem('learnedLesson', learnedLesson + ',' + lessonId);
 
     }
     this.selectedQuestion = this.questions[this.selectedIndexQuestion];

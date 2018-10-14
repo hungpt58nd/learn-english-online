@@ -16,7 +16,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '123456',
+  password : 'root',
   database : 'learnEnglishOnline'
 });
  
@@ -27,18 +27,15 @@ connection.connect(function(err) {
   }
   console.log('connected as id ' + connection.threadId);
 });
- 
-// connection.end(function(err) {
-//   // The connection is terminated now
-//   connection.destroy();
-// });
+
 
 app.post('/api/register', (req, res)=>{
   // ket noi server, tao
   let post = {
     username: req.body.username,
     password: req.body.password,
-    email: req.body.email
+    email: req.body.email,
+
   };
   let sql = "INSERT INTO user SET ?";
   connection.query(sql, post, function (err, results, fields) {
@@ -241,8 +238,11 @@ app.get('/api/user/:id', (req, res) => {
       right: results[0].rights,
       wrong: results[0].wrong
     }
-    if (!results[0].lessions){
+    console.log('asdasd: ' + results[0].lessions)
+    if (results[0].lessions !== null){
       data.lessions= results[0].lessions.split(",");
+    } else {
+      data.lessions = [];
     }
     return res.send({
       status: "success",
@@ -269,9 +269,15 @@ app.post('/api/user/lesson/learn', (req, res) => {
       password: results[0].password,
       lessions: results[0].lessions
     }
-    if (!results[0].lessions.split(',').includes(lessonId.toString())){
-      data.lessions = data.lessions + ',' + lessonId;
+
+    if (results[0].lessions === null) {
+      data.lessions = lessonId.toString();
+    } else {
+      if (!results[0].lessions.split(',').includes(lessonId.toString())){
+        data.lessions = data.lessions + ',' + lessonId;
+      }
     }
+
     updateLesson(userId, data.lessions);
     res.send({
       status: "success"

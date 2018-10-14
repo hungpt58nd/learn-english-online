@@ -22,14 +22,15 @@ export class ContentComponent{
     this.contentService.getTopics().subscribe(
       res => {
         this.topicList = res.data;
-        // console.log(this.topicList)
       },
       err => {
         alert('Lỗi trong khi lấy dữ liệu về');
       }
     );
 
-    this.contentService.getUserInfo(1).subscribe( //default id user = 1
+    let userId = JSON.parse(localStorage.getItem('user')).id;
+
+    this.contentService.getUserInfo(Number(userId)).subscribe( //default id user = 1
       res => {
         this.user = res;
         this.learnedLesson = this.user.data.lessions;
@@ -37,10 +38,13 @@ export class ContentComponent{
         localStorage.setItem('right', this.user.data.right.toString());
         localStorage.setItem('wrong', this.user.data.wrong.toString());
 
-        localStorage.setItem('level_at', this.topicList
-          .find(topic => topic.lessonList
-            .find(lesson => lesson.id.toString() === this.learnedLesson[this.learnedLesson.length-1]) !== undefined).level.toString());
-
+        if (this.learnedLesson.length === 0){
+          localStorage.setItem('level_at', '1');
+        } else {
+          localStorage.setItem('level_at', this.topicList
+            .find(topic => topic.lessonList
+              .find(lesson => lesson.id.toString() === this.learnedLesson[this.learnedLesson.length-1]) !== undefined).level.toString());
+        }
         localStorage.setItem('account_id', this.user.data.id.toString());
       },
       err => {
@@ -51,7 +55,13 @@ export class ContentComponent{
 
   onDoLesson(id: number, level: number) {
     // thieu api get
-    let latestLesson = parseInt(this.learnedLesson[this.learnedLesson.length - 1]) + 1;
+    let latestLesson;
+    if (this.learnedLesson.length === 0) {
+      latestLesson = 1;
+    } else {
+      latestLesson = parseInt(this.learnedLesson[this.learnedLesson.length - 1]) + 1;
+    }
+
     let lessonTitle = 'Lession 1';
     let levelTitle = 'Level 1';
     let findLevel = 1;
