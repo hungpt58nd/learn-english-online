@@ -1,59 +1,76 @@
-<div *ngIf="isLogin" class="col-md-4 col-md-offset-4 card">
-  <div class="card-header text-center bg-primary">
-    Đăng nhập
-  </div>
+<div *ngIf="isLogin" class="card container">
   <div class="card-body">
-    <form name="form" (ngSubmit)="loginForm.form.valid && onLogin()" #loginForm="ngForm" novalidate>
-      <div class="form-group" [ngClass]="{ 'has-error': loginForm.submitted && !email.valid }">
-        <label for="email">Email:</label>
-        <input type="text" class="form-control" name="email" [(ngModel)]="userInfo.email" #email="ngModel" required />
-        <div *ngIf="loginForm.submitted && !email.valid" class="help-block">Bạn không được để trống email</div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': loginForm.submitted && !password.valid }">
-        <label for="password">Mật khẩu:</label>
-        <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" required />
-        <div *ngIf="loginForm.submitted && !password.valid" class="help-block">Bạn phải điền password</div>
-      </div>
-      <div class="form-group">
-        <button [disabled]="isLoadingLogin" class="btn btn-primary float-left btn-lg" >Đăng nhập</button>
-        <button [disabled]="isLoadingLogin" class="btn btn-primary float-right btn-lg" (click)="isLogin = !isLogin">Đăng ký</button>
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      </div>
-    </form>
+    <div class="col-sm-5 float-left offset-sm-1">
+      <h1 class="card-title">Đăng nhập</h1>
+      <form name="form" (ngSubmit)="loginForm.form.valid && onLogin()" #loginForm="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': loginForm.submitted && !email.valid }">
+          <label for="email"><i class="fa fa-envelope"></i> Email </label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="userInfo.email" #email="ngModel" placeholder="Email của bạn" required />
+          <div *ngIf="loginForm.submitted && !email.valid" class="help-block">Bạn không được để trống email</div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': loginForm.submitted && !password.valid }">
+          <br>
+          <label for="password"><i class="fa fa-lock"></i> Mật khẩu</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" placeholder="Mật khẩu của bạn" required />
+          <div *ngIf="loginForm.submitted && !password.valid" class="help-block">Bạn phải điền password</div>
+        </div>
+        <div class="form-group">
+          <br>
+          <button [disabled]="isLoadingLogin" class="btn btn-primary float-left btn-lg" >Đăng nhập</button>
+          <button [disabled]="isLoadingLogin" class="btn btn-primary float-right btn-lg" (click)="isLogin = !isLogin">Đăng ký</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <br><br><br><br>
+        </div>
+      </form>
+    </div>
+    <div class="float-right col-sm-5 offset-sm-1">
+      <img src="../../assets/image/signup-image.jpg" alt="login image" style="width:90%">
+      <br><br><br><br>
+    </div>
+    
   </div>
 </div>
 
-<div *ngIf="!isLogin" class="col-md-4 col-md-offset-4 card">
-  <div class="card-header text-center bg-primary">
-    Đăng ký
+
+<div  *ngIf="!isLogin" class="card container">
+    <div class="card-body">
+      <div class="float-left offset-sm-1">
+        <img src="../../assets/image/signin-image.jpg" alt="register image">
+      </div>
+      <div class="col-sm-5 content offset-sm-1">
+        <h1 class="card-title">Đăng ký</h1>
+        <form name="form" (ngSubmit)="registerForm.form.valid && onRegister()" #registerForm="ngForm" novalidate>
+          <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !username.valid }">
+            <label for="username"><i class="fa fa-user"></i> Nickname </label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="userInfo.username" #username="ngModel" placeholder="Nickname của bạn" required />
+            <div *ngIf="registerForm.submitted && !username.valid" class="help-block">Bạn không được để trống nick name</div>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !email.valid }">
+            <br>
+            <label for="email"><i class="fa fa-envelope"></i> Email </label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="userInfo.email" #email="ngModel" placeholder="Email của bạn" required />
+            <div *ngIf="registerForm.submitted && !email.valid" class="help-block">Bạn không được để trống email</div>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !password.valid }">
+            <br>
+            <label for="password"><i class="fa fa-lock"></i> Mật khẩu </label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" placeholder="Mật khẩu của bạn" required />
+            <div *ngIf="registerForm.submitted && !password.valid" class="help-block">Bạn không được để trống mật khẩu</div>
+          </div>
+          <!-- <div *ngIf="password.valid" class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !repassword.valid }">
+            <label for="repassword"><i class="zmdi zmdi-lock-outline"></i></label>
+            <input type="repassword" class="form-control" name="repassword" [(ngModel)]="repassword" #repassword="ngModel" placeholder="Nhập lại mật khẩu" required />
+            <div *ngIf="registerForm.submitted && !repassword.valid" class="help-block">Mật khẩu không khớp</div>
+          </div> -->
+          <div class="form-group">
+            <br>
+            <button [disabled]="isLoadingRegister" class="btn btn-primary float-left btn-lg">Đăng ký</button>
+            <button [disabled]="isLoadingRegister" class="btn btn-primary float-right btn-lg" (click)="isLogin = !isLogin">Đăng nhập</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <br><br><br><br>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <div class="card-body">
-    <form name="form" (ngSubmit)="registerForm.form.valid && onRegister()" #registerForm="ngForm" novalidate>
-      <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !username.valid }">
-        <label for="username">Nick name:</label>
-        <input type="text" class="form-control" name="username" [(ngModel)]="userInfo.username" #username="ngModel" required />
-        <div *ngIf="registerForm.submitted && !username.valid" class="help-block">Bạn không được để trống nick name</div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !email.valid }">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" name="email" [(ngModel)]="userInfo.email" #email="ngModel" required />
-        <div *ngIf="registerForm.submitted && !email.valid" class="help-block">Bạn không được để trống email</div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !password.valid }">
-        <label for="password">Mậ khẩu</label>
-        <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" required />
-        <div *ngIf="registerForm.submitted && !password.valid" class="help-block">Bạn không được để trống mật khẩu</div>
-      </div>
-      <!-- <div *ngIf="password.valid" class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !repassword.valid }">
-        <label for="repassword">Password</label>
-        <input type="repassword" class="form-control" name="repassword" [(ngModel)]="repassword" #repassword="ngModel" required />
-        <div *ngIf="registerForm.submitted && !repassword.valid" class="help-block">Mật khẩu không khớp</div>
-      </div> -->
-      <div class="form-group">
-        <button [disabled]="isLoadingRegister" class="btn btn-primary float-left btn-lg">Đăng ký</button>
-        <button [disabled]="isLoadingRegister" class="btn btn-primary float-right btn-lg" (click)="isLogin = !isLogin">Đăng nhập</button>
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      </div>
-    </form>
-  </div>
-</div>
