@@ -28,7 +28,6 @@ export class ToolbarComponent implements OnInit {
   }
   
   onLogout() {
-    alert('Đăng xuất');
     this.router.navigate(['../account']);
     localStorage.removeItem('user');
     this.isLogin = false;
