@@ -87,6 +87,38 @@ app.post('/api/login', (req, res)=>{
   });
 })
 
+app.post('/api/editUser', (req, res)=>{
+  let r = req.body;
+  let post = [r.username, r.email, r.password, r.oldId, r.oldUsername, r.oldEmail, r.oldPassword];
+  let sql = `UPDATE user SET username = ?, email = ?, password = ? 
+              WHERE id = ? AND username = ? AND email = ? AND password = ?`;  
+  connection.query(sql, post, function (err, results) {
+    if (err) {
+      return res.send({
+        status: "fail",
+        message: "Error"
+      });
+    }
+    let sub_sql = 'SELECT * FROM user WHERE id = ?'
+    connection.query(sub_sql, [r.oldId], function (err, sub_results) {
+      let data = {
+        id: sub_results[0].id,
+        username: sub_results[0].username,
+        email: sub_results[0].email,
+        password: sub_results[0].password,
+        lessions: sub_results[0].lessions
+      }
+      if (sub_results[0].lessions != null){
+        data.lessions= sub_results[0].lessions.split(",");
+      }
+      return res.send({
+        status: "success",
+        data: data
+      });
+    });
+  });
+})
+
 app.get('/api/levels', (req, res)=>{
   // get level
   let sql = `SELECT level.id as id, level.title, description, lession.id as lession_id,
@@ -153,10 +185,7 @@ app.post('/api/lession', (req, res)=>{
       if(results[index].type == 4){
         results[index].answers = JSON.parse(results[index].answers);
       }
-      // console.log(results[index].answers)
     }
-    
-    console.log(results)
     return res.send({
       status: "success",
       data: results
@@ -225,8 +254,6 @@ app.get('/api/user/:id', (req, res) => {
 app.post('/api/user/lesson/learn', (req, res) => {
   let userId = req.body.userId;
   let lessonId = req.body.lessonId;
-
-  console.log('asdasd');
   let sql = 'SELECT * FROM user WHERE id = ?';
   connection.query(sql, [userId], function (err, results) {
     if (err || results.length == 0) {
@@ -254,7 +281,6 @@ app.post('/api/user/lesson/learn', (req, res) => {
 
 app.post('/api/user/right', (req, res) => {
    let sql = 'UPDATE user SET rights = ? where id = ?';
-   console.log(sql);
    connection.query(sql, [req.body.right, Number(req.body.userId)], function (err, results) {
      if(err){
        console.log(err.toString())

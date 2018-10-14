@@ -35,6 +35,6 @@ export class ToolbarComponent implements OnInit {
   }
 
   onUserSetting() {
-    alert('Setting');
+    this.router.navigate(['../editAccount']);
   }
 }

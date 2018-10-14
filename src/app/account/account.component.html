@@ -34,43 +34,43 @@
 
 
 <div  *ngIf="!isLogin" class="card container">
-    <div class="card-body">
-      <div class="float-left offset-sm-1">
-        <img src="../../assets/image/signin-image.jpg" alt="register image">
-      </div>
-      <div class="col-sm-5 content offset-sm-1">
-        <h1 class="card-title">Đăng ký</h1>
-        <form name="form" (ngSubmit)="registerForm.form.valid && onRegister()" #registerForm="ngForm" novalidate>
-          <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !username.valid }">
-            <label for="username"><i class="glyphicon glyphicon-user"></i> Nickname </label>
-            <input type="text" class="form-control" name="username" [(ngModel)]="userInfo.username" #username="ngModel" placeholder="Nickname của bạn" required />
-            <div *ngIf="registerForm.submitted && !username.valid" class="help-block">Bạn không được để trống nick name</div>
-          </div>
-          <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !email.valid }">
-            <br>
-            <label for="email"><i class="glyphicon glyphicon-envelope"></i> Email </label>
-            <input type="email" class="form-control" name="email" [(ngModel)]="userInfo.email" #email="ngModel" placeholder="Email của bạn" required />
-            <div *ngIf="registerForm.submitted && !email.valid" class="help-block">Bạn không được để trống email</div>
-          </div>
-          <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !password.valid }">
-            <br>
-            <label for="password"><i class="glyphicon glyphicon-lock"></i> Mật khẩu </label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" placeholder="Mật khẩu của bạn" required />
-            <div *ngIf="registerForm.submitted && !password.valid" class="help-block">Bạn không được để trống mật khẩu</div>
-          </div>
-          <!-- <div *ngIf="password.valid" class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !repassword.valid }">
-            <label for="repassword"><i class="zmdi zmdi-lock-outline"></i></label>
-            <input type="repassword" class="form-control" name="repassword" [(ngModel)]="repassword" #repassword="ngModel" placeholder="Nhập lại mật khẩu" required />
-            <div *ngIf="registerForm.submitted && !repassword.valid" class="help-block">Mật khẩu không khớp</div>
-          </div> -->
-          <div class="form-group">
-            <br>
-            <button [disabled]="isLoadingRegister" class="btn btn-primary float-left btn-lg">Đăng ký</button>
-            <button [disabled]="isLoadingRegister" class="btn btn-primary float-right btn-lg" (click)="isLogin = !isLogin">Đăng nhập</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            <br><br><br><br>
-          </div>
-        </form>
-      </div>
+  <div class="card-body">
+    <div class="float-left offset-sm-1">
+      <img src="../../assets/image/signin-image.jpg" alt="register image">
+    </div>
+    <div class="col-sm-5 content offset-sm-1">
+      <h1 class="card-title">Đăng ký</h1>
+      <form name="form" (ngSubmit)="registerForm.form.valid && onRegister()" #registerForm="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !username.valid }">
+          <label for="username"><i class="glyphicon glyphicon-user"></i> Nickname </label>
+          <input type="text" class="form-control" name="username" [(ngModel)]="userInfo.username" #username="ngModel" placeholder="Nickname của bạn" required />
+          <div *ngIf="registerForm.submitted && !username.valid" class="help-block">Bạn không được để trống nick name</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !email.valid }">
+          <br>
+          <label for="email"><i class="glyphicon glyphicon-envelope"></i> Email </label>
+          <input type="email" class="form-control" name="email" [(ngModel)]="userInfo.email" #email="ngModel" placeholder="Email của bạn" required />
+          <div *ngIf="registerForm.submitted && !email.valid" class="help-block">Bạn không được để trống email</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !password.valid }">
+          <br>
+          <label for="password"><i class="glyphicon glyphicon-lock"></i> Mật khẩu </label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" placeholder="Mật khẩu của bạn" required />
+          <div *ngIf="registerForm.submitted && !password.valid" class="help-block">Bạn không được để trống mật khẩu</div>
+        </div>
+        <!-- <div *ngIf="password.valid" class="form-group" [ngClass]="{ 'has-error': registerForm.submitted && !repassword.valid }">
+          <label for="repassword"><i class="zmdi zmdi-lock-outline"></i></label>
+          <input type="repassword" class="form-control" name="repassword" [(ngModel)]="repassword" #repassword="ngModel" placeholder="Nhập lại mật khẩu" required />
+          <div *ngIf="registerForm.submitted && !repassword.valid" class="help-block">Mật khẩu không khớp</div>
+        </div> -->
+        <div class="form-group">
+          <br>
+          <button [disabled]="isLoadingRegister" class="btn btn-primary float-left btn-lg">Đăng ký</button>
+          <button [disabled]="isLoadingRegister" class="btn btn-primary float-right btn-lg" (click)="isLogin = !isLogin">Đăng nhập</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <br><br><br><br>
+        </div>
+      </form>
     </div>
   </div>
+</div>
