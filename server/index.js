@@ -236,9 +236,9 @@ app.get('/api/user/:id', (req, res) => {
       password: results[0].password,
       lessions: results[0].lessions,
       right: results[0].rights,
-      wrong: results[0].wrong
+      wrong: results[0].wrong,
+      money: results[0].money
     }
-    console.log('asdasd: ' + results[0].lessions)
     if (results[0].lessions !== null){
       data.lessions= results[0].lessions.split(",");
     } else {
@@ -298,6 +298,17 @@ app.post('/api/user/right', (req, res) => {
 app.post('/api/user/wrong', (req, res) => {
   let sql = 'UPDATE user SET wrong = ? where id = ?';
   connection.query(sql, [req.body.wrong, Number(req.body.userId)], function (err, results) {
+    if(err){
+      console.log('error')
+    }
+    res.send({status: "sucess"})
+  })
+})
+
+app.post('/api/money', (req, res) => {
+  console.log(req.body);
+  let sql = 'UPDATE user SET money = ? where id = ?';
+  connection.query(sql, [Number(req.body.money), Number(req.body.userId)], function (err, results) {
     if(err){
       console.log('error')
     }

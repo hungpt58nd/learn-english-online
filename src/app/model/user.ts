@@ -6,6 +6,7 @@ export class User {
   lessions: Array<string>;
   right: number;
   wrong: number;
+  money: number;
   constructor() {
     this.id = 0;
     this.username = '';
@@ -14,5 +15,6 @@ export class User {
     this.lessions = new Array<string>();
     this.right = 0;
     this.wrong = 0;
+    this.money = 0;
   }
 }

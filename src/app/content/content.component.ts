@@ -30,13 +30,14 @@ export class ContentComponent{
 
     let userId = JSON.parse(localStorage.getItem('user')).id;
 
-    this.contentService.getUserInfo(Number(userId)).subscribe( //default id user = 1
+    this.contentService.getUserInfo(Number(userId)).subscribe(
       res => {
         this.user = res;
         this.learnedLesson = this.user.data.lessions;
 
         localStorage.setItem('right', this.user.data.right.toString());
         localStorage.setItem('wrong', this.user.data.wrong.toString());
+        localStorage.setItem('money', this.user.data.money.toString())
 
         if (this.learnedLesson.length === 0){
           localStorage.setItem('level_at', '1');
@@ -65,8 +66,18 @@ export class ContentComponent{
     let lessonTitle = 'Lession 1';
     let levelTitle = 'Level 1';
     let findLevel = 1;
+    const currentMoney = this.user.data.money - 10000;
     if (id <= latestLesson) {
-      this.route.navigate(['/lesson', id ]);
+      if (id < latestLesson) {
+        this.route.navigate(['/lesson', id ]);
+      } else  {
+        if (currentMoney <= 0) {
+          alert('Vui lòng nạp thêm tiền để tiếp tục học');
+        } else {
+          this.contentService.updateMoney(currentMoney, this.user.data.id).subscribe();
+          this.route.navigate(['/lesson', id ]);
+        }
+      }
     } else {
       for (let i = 0; i < this.topicList.length; i++) {
         let lessons = this.topicList[i].lessonList;
@@ -77,7 +88,7 @@ export class ContentComponent{
             findLevel = this.topicList[i].level;
             break;
           }
-        }        
+        }
       }
       if (level !== findLevel) {
         alert('Hãy học với level: ' + levelTitle);
