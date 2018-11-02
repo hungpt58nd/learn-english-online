@@ -21,4 +21,12 @@ export class EditAccountService {
     });
   }
 
+  addMoney(username, code){
+    const url = 'http://localhost:3000/api/addMoney';
+    return this.http.post<UserRes>(url, {
+      username: username,
+      code: code
+    })
+  }
+
 }

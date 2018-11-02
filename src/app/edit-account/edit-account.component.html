@@ -23,11 +23,11 @@
           <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" placeholder="userInfo.password" required />
           <div *ngIf="editAccount.submitted && !password.valid" class="help-block">Bạn không được để trống mật khẩu</div>
         </div>
-        <!-- <div *ngIf="password.valid" class="form-group" [ngClass]="{ 'has-error': editAccount.submitted && !repassword.valid }">
-          <label for="repassword"><i class="zmdi zmdi-lock-outline"></i></label>
-          <input type="repassword" class="form-control" name="repassword" [(ngModel)]="repassword" #repassword="ngModel" placeholder="Nhập lại mật khẩu" required />
-          <div *ngIf="editAccount.submitted && !repassword.valid" class="help-block">Mật khẩu không khớp</div>
-        </div> -->
+        <div class="form-group">
+          <br>
+          <label for="money"><i class="glyphicon glyphicon-lock"></i> Mã Nap tiền </label>
+          <input type="text" class="form-control" name="money" [(ngModel)]="bonusCode" #money="ngModel" placeholder="" />
+        </div>
         <div class="form-group">
           <br>
           <button [disabled]="isLoadingEdit" class="btn btn-primary float-left btn-lg">Chỉnh sửa</button>

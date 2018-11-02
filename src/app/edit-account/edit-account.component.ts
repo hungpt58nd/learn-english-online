@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { EditAccountService } from "./edit-account.service";
 import { User } from "../model/user";
+import {current} from 'codelyzer/util/syntaxKind';
 
 @Component({
   selector: 'app-edit-account',
@@ -15,6 +16,7 @@ export class EditAccountComponent implements OnInit {
 
   userInfo: User = new User();
   oldUserInfo: User = new User();
+  bonusCode: String = '';
 
   constructor(private editAccountService: EditAccountService, private router: Router) {
     if (localStorage.getItem('user')){
@@ -40,8 +42,23 @@ export class EditAccountComponent implements OnInit {
         if (res.status == "fail"){
           alert(res.message);
         } else {
+          let tmp = res.data;
+          if(this.bonusCode.length > 0){
+            this.editAccountService.addMoney(this.userInfo.username, this.bonusCode).subscribe(
+              res => {
+                if(res.status == "fail"){
+                  alert('Code Invalid');
+                } else {
+                  alert(res.message + ' added to your account');
+                  let currentMoney = localStorage.getItem('money');
+                  let money = Number(currentMoney) + Number(res.message);
+                  localStorage.setItem('money', money.toString());
+                }
+              }
+            );
+          }
+          localStorage.setItem('user', JSON.stringify(tmp));
           this.router.navigate(['']);
-          localStorage.setItem('user', JSON.stringify(res.data));
         }
         this.isLoadingEdit = false;
       }

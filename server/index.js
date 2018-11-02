@@ -15,8 +15,8 @@ app.use((req, res, next) => {
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : 'root',
+  user     : 'p4x',
+  password : 'Pyxis4All@',
   database : 'learnEnglishOnline'
 });
  
@@ -313,6 +313,29 @@ app.post('/api/money', (req, res) => {
       console.log('error')
     }
     res.send({status: "sucess"})
+  })
+})
+
+app.post('/api/addMoney', (req, res) => {
+  let sql = 'select * from code';
+  connection.query(sql, function (err, results) {
+    let result = results.find(e => e.code === req.body.code);
+    if(result && result.valid === 1){
+      sql = 'select * from user where username = ?';
+      connection.query(sql, [req.body.username], function (err, results) {
+        let tmpUser = results[0];
+        let money = Number(results[0].money) + Number(result.money);
+        tmpUser.money = money;
+        sql = 'update user set money = ? where username = ?';
+        connection.query(sql, [money, req.body.username], function (err, results) {
+          res.send({status: "success", data: tmpUser, message: result.money});
+          sql = 'update code set valid = 0 where code = ?';
+          connection.query(sql, [req.body.code], function (err, results) {})
+        })
+      })
+    } else {
+      res.send({status: 'fail'});
+    }
   })
 })
 
